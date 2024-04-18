@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
-  TextInput,
-  Alert,
   SafeAreaView,
   Platform,
-  ScrollView,
   TouchableOpacity,
   Image,
 } from "react-native";
@@ -35,14 +31,22 @@ export default function Home() {
     navigation.navigation("CadastroRegistro");
   };
 
-  const editarRegistro = () => {
-    navigation.navigation("EditarRegistro");
+  const editarRegistros = () => {
+    navigation.navigation("EditarRegistros");
+  };
+
+  const excluirRegistros = () => {
+    navigation.navigation("ExcluirRegistros");
+  };
+
+  const pesquisaRegistros = () => {
+    navigation.navigation("ExcluirRegistros");
   };
 
   useEffect(() => {
     db.transaction((tx) => {
       tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS registros (id INTEGER PRIMARY KEY AUTOINCREMENT, filme TEXT NOT NULL, genero TEXT NOT NULL, classificacao TEXT NOT NULL, data DEFAULT (STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW', 'localtime')))",
+        "CREATE TABLE IF NOT EXISTS registros (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT NOT NULL, numero TEXT NOT NULL, data DEFAULT (STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW', 'localtime')))",
         [], //[]: Este é o array de parâmetros. Como não estamos usando nenhum parâmetro na consulta SQL, deixamos esse array vazio.
         () => console.log("Tabela criada com sucesso"), //retorno de  sucesso
         // '_' É um parâmetro que representa o resultado da transação SQL, por convenção utiliza-se o underscore. para indicar que estamos ignorando esse valor.
@@ -56,25 +60,27 @@ export default function Home() {
       <SafeAreaView style={styles.androidSafeArea}>
         <View style={styles.container}>
           <Text style={styles.title}>Cadastro de Registros</Text>
-          <FontAwesome6 name="film" color="white" size={32} />
-
+          <FontAwesome6 name="nome" color="white" size={32} />
 
           <TouchableOpacity style={styles.button} onPress={cadastroRegistro}>
             <Text style={styles.textButton}>Incluir Registro</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button} onPress={todosRegistros}>
-            <Text style={styles.textButton}>Accessar Banco de Dados</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.button} onPress={editarRegistro}>
+          <TouchableOpacity style={styles.button} onPress={editarRegistros}>
             <Text style={styles.textButton}>Editar Registro</Text>
           </TouchableOpacity>
           
-          <TouchableOpacity style={styles.button} onPress={cadastroRegistro}>
-            <Text style={styles.textButton}>Cadastro de Registro</Text>
+          <TouchableOpacity style={styles.button} onPress={excluirRegistros}>
+            <Text style={styles.textButton}>Excluir Registro</Text>
           </TouchableOpacity>
 
+          <TouchableOpacity style={styles.button} onPress={pesquisaRegistros}>
+            <Text style={styles.textButton}>Pesquisar Registro</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.button} onPress={todosRegistros}>
+            <Text style={styles.textButton}>Todos os Registros</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.alinharEmLinha}>

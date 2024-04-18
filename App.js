@@ -4,8 +4,6 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { getStatusBarHeight } from "react-native-status-bar-height";
-import { StatusBar } from "expo-status-bar";
-
 
 import home from "./src/pages/home";
 
@@ -22,6 +20,7 @@ export default function App() {
             component={home}
             options={{
               title: "home",
+              headerShown: false // mostra nome da pagina
             }}
           />
 
@@ -44,5 +43,4 @@ const styles = StyleSheet.create({
     gap: 10
   },
   
-
 });
