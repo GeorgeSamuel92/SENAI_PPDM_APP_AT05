@@ -3,8 +3,11 @@ import { StyleSheet, Platform, } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { getStatusBarHeight } from "react-native-status-bar-height";
+import { StatusBar } from "expo-status-bar";
 
-import cadastrar from "./src/pages/cadastrar";;
+
+import home from "./src/pages/home";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,11 +18,10 @@ export default function App() {
         <Stack.Navigator>
 
           <Stack.Screen
-            name="cadastrar"
-            component={cadastrar}
+            name="Home"
+            component={home}
             options={{
-              title: "cadastrar",
-              harderShown: false,
+              title: "home",
             }}
           />
 
@@ -41,33 +43,6 @@ const styles = StyleSheet.create({
     padding: 15,
     gap: 10
   },
-  containerScroll: {
-    width: '100%',
-    backgroundColor: '#fff',
-    padding: 20,
-    gap: 5
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  clienteItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 5,
-  },
-  input: {
-    width: '100%',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-    marginBottom: 10,
-  },
-  buttonTable: {
-    flexDirection: 'row',
-    gap: 15
-  }
+  
+
 });

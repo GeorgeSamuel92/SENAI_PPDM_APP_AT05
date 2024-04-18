@@ -9,11 +9,9 @@ import {
   Platform,
   TouchableOpacity,
 } from "react-native";
-// import { getStatusBarHeight } from "react-native-status-bar-height";
 import { DatabaseConnection } from "../../database/database";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-// import RNPickerSelect from 'react-native-picker-select';
 
 const db = new DatabaseConnection().getConnection();
 
