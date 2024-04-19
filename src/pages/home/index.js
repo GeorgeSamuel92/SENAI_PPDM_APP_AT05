@@ -20,27 +20,27 @@ export default function Home() {
   const navigation = useNavigation();
 
   const config = () => {
-    navigation.navigation("Config");
+    navigation.navigate("Config");
   };
 
   const todosRegistros = () => {
-    navigation.navigation("TodosRegistros");
+    navigation.navigate("TodosRegistros");
   };
 
   const cadastroRegistro = () => {
-    navigation.navigation("CadastroRegistro");
+    navigation.navigate("CadastroRegistro");
   };
 
   const editarRegistros = () => {
-    navigation.navigation("EditarRegistros");
+    navigation.navigate("EditarRegistros");
   };
 
   const excluirRegistros = () => {
-    navigation.navigation("ExcluirRegistros");
+    navigation.navigate("ExcluirRegistros");
   };
 
   const pesquisaRegistros = () => {
-    navigation.navigation("ExcluirRegistros");
+    navigation.navigate("PesquisarRegistros");
   };
 
   useEffect(() => {
@@ -60,16 +60,15 @@ export default function Home() {
       <SafeAreaView style={styles.androidSafeArea}>
         <View style={styles.container}>
           <Text style={styles.title}>Cadastro de Registros</Text>
-          <FontAwesome6 name="nome" color="white" size={32} />
 
           <TouchableOpacity style={styles.button} onPress={cadastroRegistro}>
-            <Text style={styles.textButton}>Incluir Registro</Text>
+            <Text style={styles.textButton}>Cadastro Registro</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.button} onPress={editarRegistros}>
             <Text style={styles.textButton}>Editar Registro</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity style={styles.button} onPress={excluirRegistros}>
             <Text style={styles.textButton}>Excluir Registro</Text>
           </TouchableOpacity>
@@ -85,7 +84,7 @@ export default function Home() {
 
         <View style={styles.alinharEmLinha}>
           <TouchableOpacity style={styles.buttonConfig} onPress={config}>
-            <FontAwesome6 name="gear" color="#4b2379" size={24} />
+            <FontAwesome6 name="gear" color="red" size={30} />
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -105,8 +104,42 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    backgroundColor: "#fff",
+    backgroundColor: "black",
     padding: 15,
     gap: 10,
+  },
+  alinharEmLinha: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    margin: 15,
+
+  },
+  button: {
+    borderRadius: 30,
+    backgroundColor: "red",
+    height: 60,
+    width: "90%",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
+    elevation: 7,
+    marginBottom: 30,
+  },
+  textButton: {
+    color: "#FFF",
+    fontSize: 26,
+    fontWeight: "bold",
+  },
+  title: {
+    fontSize: 26,
+    letterSpacing: 6,
+    textAlign: "center",
+    color: "red",
+    marginBottom: 30,
+    fontFamily: "Arial",
+  },
+  buttonTable: {
+    flexDirection: "row",
+    gap: 15,
   },
 });
