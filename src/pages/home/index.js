@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     margin: 15,
-
   },
   button: {
     borderRadius: 30,
@@ -136,7 +135,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "red",
     marginBottom: 30,
-    fontFamily: "Arial",
   },
   buttonTable: {
     flexDirection: "row",

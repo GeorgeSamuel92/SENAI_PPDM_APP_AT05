@@ -19,6 +19,7 @@ export default function cadastrar() {
   const [todos, setTodos] = useState([]);
   const [nome, setNome] = useState("");
   const [numero, setNumero] = useState(null);
+  const [dataNas, setdataNas] = useState(null);
 
   const atualizarRegistros = () => {
     try {
@@ -32,7 +33,7 @@ export default function cadastrar() {
     }
   };
 
-  const CadastroRegistro = () => {
+  const CadastroRegistros = () => {
     useEffect(() => {
       atualizarRegistros();
     }, []);
@@ -45,16 +46,21 @@ export default function cadastrar() {
       Alert.alert("Atenção", "Preencha o número no campo");
       return;
     }
+    if (dataNas.trim() === null) {
+      Alert.alert("Atenção", "Preencha uma data no campo");
+      return;
+    }
   };
 
   db.transction((tx) => {
     tx.executeSql(
-      "INSERT INTO cadastro (nome, numero) VALUES (?,?)",
-      [nome, numero],
+      "INSERT INTO cadastro (nome, numero, dataNas) VALUES (?,?,?)",
+      [nome, numero, dataNas, ],
       (_, { rowsAffected }) => {
         console.log(rowsAffected);
         setNome("");
         setNumero(null);
+        setdataNas(null);
         Alert.alert("Info", "Registro incluíddo com sucesso");
         atualizarRegistros();
       },
@@ -69,6 +75,7 @@ export default function cadastrar() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.androidSafeArea}>
         <View style={styles.container}>
+
           <View style={styles.viewTitle}>
             <Text style={styles.title}>Novo registro</Text>
           </View>
@@ -84,13 +91,21 @@ export default function cadastrar() {
             style={styles.input}
             value={numero}
             onChangeText={setNumero}
-            placeholder="Informe o numero"
+            placeholder="Informe o numero de telefone"
           />
+           <TextInput
+            style={styles.input}
+            value={dataNas}
+            onChangeText={setdataNas}
+            placeholder="Informe sua data de nascimento"
+          />
+
         </View>
-        <TouchableOpacity style={styles.buttonSalvar} onPress={CadastroRegistro}>
+        <TouchableOpacity style={styles.buttonSalvar} onPress={CadastroRegistros}>
           <Text style={styles.buttonTitle}>Salvar</Text>
           <FontAwesome6 name="check" size={32} color="#FFF" />
         </TouchableOpacity>
+
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -109,4 +124,6 @@ const styles = StyleSheet.create({
     padding: 15,
     gap: 10,
   },
+  
+
 });
