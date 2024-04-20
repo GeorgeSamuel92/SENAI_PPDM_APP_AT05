@@ -5,8 +5,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { getStatusBarHeight } from "react-native-status-bar-height";
 
-import home from "./src/pages/Home";
-import cadastroRegistros from "./src/pages/CadastroRegistros";
+import Home from "./src/pages/Home";
+import CadastroRegistros from "./src/pages/CadastroRegistros";
+import EditarRegistros from "./src/pages/EditarRegistros";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,10 +16,9 @@ export default function App() {
     <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
-
           <Stack.Screen
             name="Home"
-            component={home}
+            component={Home}
             options={{
               title: "Home",
               headerShown: false, // mostra nome da pagina
@@ -27,12 +27,16 @@ export default function App() {
 
           <Stack.Screen
             name="Cadastro"
-            component={cadastroRegistros}
+            component={CadastroRegistros}
             options={{
               title: "Cadastro",
               headerShown: false,
             }}
           />
+
+          <Stack.Screen name="Editar" component={EditarRegistros} />
+
+          <Stack.Screen name="TodosRegistros" component={TodosRegistros} />
 
         </Stack.Navigator>
       </NavigationContainer>
