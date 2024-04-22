@@ -1,22 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Button,
-  TextInput,
-  Alert,
   SafeAreaView,
   Platform,
-  ScrollView,
   TouchableOpacity,
-  Image,
 } from "react-native";
 import { getStatusBarHeight } from "react-native-status-bar-height";
 import { DatabaseConnection } from "../../database/database";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import { useNavigation, StackActions } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 const db = DatabaseConnection.getConnection();
 
@@ -24,57 +19,64 @@ export default function Home() {
   const navigation = useNavigation();
 
   const config = () => {
-    navigation.navigation("Config");
+    navigation.navigate("Config");
   };
 
-  const todosRegistros = () => {
-    navigation.navigation("TodosRegistros");
-  };
+  function todosRegistros() {
+    navigation.navigate("TodosRegistros");
+  }
 
-  const cadastroRegistro = () => {
-    navigation.navigation("CadastroRegistro");
-  };
+  function cadastroRegistro() {
+    navigation.navigate("CadastroRegistro");
+  }
 
-  const editarRegistro = () => {
-    navigation.navigation("EditarRegistro");
-  };
+  function pesquisaRegistros() {
+    navigation.navigate("PesquisaRegistros");
+  }
 
   useEffect(() => {
     db.transaction((tx) => {
       tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS registros (id INTEGER PRIMARY KEY AUTOINCREMENT, filme TEXT NOT NULL, genero TEXT NOT NULL, classificacao TEXT NOT NULL, data DEFAULT (STRFTIME('%Y-%m-%d %H:%M:%f', 'NOW', 'localtime')))",
-        [], //[]: Este é o array de parâmetros. Como não estamos usando nenhum parâmetro na consulta SQL, deixamos esse array vazio.
-        () => console.log("Tabela criada com sucesso"), //retorno de  sucesso
-        // '_' É um parâmetro que representa o resultado da transação SQL, por convenção utiliza-se o underscore. para indicar que estamos ignorando esse valor.
-        (_, error) => console.error(error) //retorno de  erro
+        "CREATE TABLE IF NOT EXISTS tbl_pessoas(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT NOT NULL, data_nasc DATE)",
+        [],
+        () => console.log("tbl_pessoas criada com sucesso"),
+        (_, error) => console.error(error)
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS telefones_has_pessoas(telefone_id INTEGER NOT NULL, pessoas_id INTEGER NOT NULL, FOREIGN KEY (telefone_id) REFERENCES tbl_telefones, FOREIGN KEY (pessoas_id) REFERENCES tbl_pessoas(id), PRIMARY KEY (telefone_id, pessoas_id))",
+        [],
+        () => console.log("tbl_telefone_has_pessoas criada com sucesso"),
+        (_, error) => console.error(error)
       );
     });
   }, []);
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={styles.container}>
       <SafeAreaView style={styles.androidSafeArea}>
-        <View style={styles.container}>
-          <Text style={styles.title}>Cadastro de Registros</Text>
+
+        <View>
+        <Text style={styles.textTitle}>Cadastro de Registros</Text>
           <FontAwesome6 name="film" color="white" size={32} />
+        </View>
 
-
-          <TouchableOpacity style={styles.button} onPress={cadastroRegistro}>
-            <Text style={styles.textButton}>Incluir Registro</Text>
-          </TouchableOpacity>
-
+        <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={todosRegistros}>
-            <Text style={styles.textButton}>Accessar Banco de Dados</Text>
+            <Text style={styles.textButton}>Acessar Banco de Dados</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button} onPress={editarRegistro}>
-            <Text style={styles.textButton}>Editar Registro</Text>
+          <TouchableOpacity style={styles.button} onPress={pesquisaRegistros}>
+            <Text style={styles.textButton}>Pesquisa Registro</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity style={styles.button} onPress={cadastroRegistro}>
             <Text style={styles.textButton}>Cadastro de Registro</Text>
           </TouchableOpacity>
-
         </View>
 
         <View style={styles.alinharEmLinha}>
@@ -102,5 +104,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 15,
     gap: 10,
+  },
+  textTitle: {
+    color: "black",
+    fontSize: 22,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    width: "100%",
+    paddingHorizontal: 20,
+    marginTop: 20,
+  },
+  button: {
+    height: 50,
+    width: 300,
+    backgroundColor: "yellow",
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 5,
+    marginBottom: 10,
   },
 });
